@@ -5,15 +5,32 @@
 .sidebar {
   width: var(--sidebar-width);
   min-width: var(--sidebar-width);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  /* 🔥 حل مشكلة navigateur mobile */
+  height: 100vh;
   height: 100dvh;
+
+  /* احترام safe area */
+  padding-top: calc(28px + env(safe-area-inset-top));
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  padding-left: 20px;
+  padding-right: 20px;
+
   background: var(--black-deep);
   border-right: 1px solid var(--black-border);
+
   display: flex;
   flex-direction: column;
-  padding: 28px 20px 24px;
-  position: relative;
+
   overflow: hidden;
-  z-index: 100;
+
+  /* 🔥 خليها فوق كل شي */
+  z-index: 2000;
+
   transition: transform var(--transition);
 }
 
