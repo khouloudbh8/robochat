@@ -25,7 +25,7 @@ function getBotResponse() {
 const WELCOME_MESSAGE = {
   id: 'welcome',
   role: 'bot',
-  text: "Bienvenue ! Je suis **RoboChat**, l'assistant virtuel de l'Association ENSI. Je suis ici pour répondre à toutes vos questions sur notre association, nos projets, nos membres et bien plus encore. Comment puis-je vous aider aujourd'hui ?",
+  text: "Bienvenue ! Je suis **RoboChat**, l'assistant virtuel de l'Association Robotique ENSI. Je suis ici pour répondre à toutes vos questions sur notre association, nos projets, nos membres et bien plus encore. Comment puis-je vous aider aujourd'hui ?",
   timestamp: new Date(),
 }
 
@@ -111,7 +111,7 @@ function ChatBox({ onMenuClick }) {
           <div>
             <h2 className="chatbox-title">RoboChat</h2>
             <p className="chatbox-subtitle">
-              <span className="header-dot" /> Assistant de l'Association ENSI
+              <span className="header-dot" /> Assistant de l'Association Robotique  ENSI
             </p>
           </div>
         </div>

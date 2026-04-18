@@ -1,13 +1,10 @@
 import '../styles/Sidebar.css'
 
 const NAV_LINKS = [
-  { icon: '◈', label: 'Accueil',       href: '#' },
-  { icon: '◉', label: 'Notre Mission', href: '#' },
-  { icon: '◈', label: 'Projets',       href: '#' },
-  { icon: '◉', label: 'Membres',       href: '#' },
-  { icon: '◈', label: 'Contact',       href: '#' },
+  { icon: '◉', label: 'Login', href: '#' },
+  { icon: '◈', label: 'Quiz',       href: '#' },
+  { icon: '◉', label: 'Chat',       href: '#' },
 ]
-
 function Sidebar({ isOpen, onClose }) {
   return (
     <aside className={`sidebar ${isOpen ? 'sidebar--open' : ''}`}>
@@ -44,7 +41,7 @@ function Sidebar({ isOpen, onClose }) {
           </div>
         </div>
         <h1 className="sidebar-app-name">RoboChat</h1>
-        <p className="sidebar-assoc-name">Association ENSI</p>
+        <p className="sidebar-assoc-name">Association Robotique ENSI</p>
         <div className="sidebar-divider" />
       </div>
 
@@ -71,7 +68,7 @@ function Sidebar({ isOpen, onClose }) {
 
       {/* ── Footer ── */}
       <div className="sidebar-footer">
-        <p>© 2025 Association ENSI</p>
+        <p>© 2025 Association  Robotique ENSI</p>
         <p>Tous droits réservés</p>
       </div>
     </aside>
