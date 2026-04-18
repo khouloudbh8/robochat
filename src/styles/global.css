@@ -55,11 +55,7 @@ html, body, #root {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  margin: 0;
-  padding-top: env(safe-area-inset-top);
 }
-}
-
 @supports (height: 100dvh) {
   html, body, #root {
     height: 100dvh;
@@ -67,10 +63,7 @@ html, body, #root {
 }
 
 body {
-  padding-top: env(safe-area-inset-top);
-}
-
-body {
+  padding-top: env(safe-area-inset-top, 20px);
   background: var(--black);
   color: var(--text-white);
   font-family: var(--font-body);
