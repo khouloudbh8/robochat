@@ -248,4 +248,7 @@
   .sidebar-close {
     display: block;
   }
+    .sidebar {
+    transform: translateX(-100%);
+  }
 }
