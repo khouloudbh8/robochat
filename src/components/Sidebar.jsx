@@ -1,17 +1,15 @@
 import '../styles/Sidebar.css'
 
 const NAV_LINKS = [
-  { icon: '◉', label: 'Login', href: '#' },
-  { icon: '◈', label: 'Quiz',       href: '#' },
-  { icon: '◉', label: 'Chat',       href: '#' },
+  { icon: '◉', label: 'Chat',  key: 'chat' },
+  { icon: '◈', label: 'Quiz',  key: 'quiz' },
 ]
-function Sidebar({ isOpen, onClose }) {
+
+function Sidebar({ isOpen, onClose, onNavigate, currentPage, user, onLogout }) {
   return (
     <aside className={`sidebar ${isOpen ? 'sidebar--open' : ''}`}>
-      {/* Grain texture overlay */}
       <div className="sidebar-grain" />
 
-      {/* Close button (mobile) */}
       <button className="sidebar-close" onClick={onClose} aria-label="Fermer">
         ✕
       </button>
@@ -21,10 +19,8 @@ function Sidebar({ isOpen, onClose }) {
         <div className="sidebar-logo-wrap">
           <div className="sidebar-logo-icon">
             <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-              {/* Triangle stylisé inspiré du logo */}
               <polygon points="30,4 56,52 4,52" fill="none" stroke="url(#goldGrad1)" strokeWidth="2.5"/>
               <polygon points="30,14 48,48 12,48" fill="none" stroke="url(#goldGrad2)" strokeWidth="1.5" opacity="0.6"/>
-              {/* Barres horizontales (E du logo) */}
               <line x1="32" y1="38" x2="52" y2="38" stroke="#F0C040" strokeWidth="3" strokeLinecap="round"/>
               <line x1="35" y1="44" x2="52" y2="44" stroke="#D4A017" strokeWidth="3" strokeLinecap="round"/>
               <defs>
@@ -50,15 +46,42 @@ function Sidebar({ isOpen, onClose }) {
         <p className="sidebar-nav-label">Navigation</p>
         <ul>
           {NAV_LINKS.map((link) => (
-            <li key={link.label}>
-              <a href={link.href} className="sidebar-nav-link">
+            <li key={link.key}>
+              <button
+                className={`sidebar-nav-link ${currentPage === link.key ? 'sidebar-nav-link--active' : ''}`}
+                onClick={() => onNavigate(link.key)}
+              >
                 <span className="nav-icon">{link.icon}</span>
                 <span>{link.label}</span>
-              </a>
+              </button>
             </li>
           ))}
         </ul>
       </nav>
+
+      {/* ── User / Login ── */}
+      <div className="sidebar-divider" style={{ margin: '12px 0' }} />
+      {user ? (
+        <div className="sidebar-user">
+          <div className="sidebar-user-info">
+            <div className="sidebar-user-avatar">
+              {user.name.charAt(0).toUpperCase()}
+            </div>
+            <div>
+              <p className="sidebar-user-name">{user.name}</p>
+              <p className="sidebar-user-email">{user.email}</p>
+            </div>
+          </div>
+          <button className="sidebar-logout-btn" onClick={onLogout}>
+            Déconnexion
+          </button>
+        </div>
+      ) : (
+        <button className="sidebar-login-btn" onClick={() => onNavigate('login')}>
+          <span>◉</span>
+          <span>Se connecter</span>
+        </button>
+      )}
 
       {/* ── Statut ── */}
       <div className="sidebar-status">
@@ -68,7 +91,7 @@ function Sidebar({ isOpen, onClose }) {
 
       {/* ── Footer ── */}
       <div className="sidebar-footer">
-        <p>© 2025 Association  Robotique ENSI</p>
+        <p>© 2025 Association Robotique ENSI</p>
         <p>Tous droits réservés</p>
       </div>
     </aside>

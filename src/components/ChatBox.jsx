@@ -29,12 +29,14 @@ const WELCOME_MESSAGE = {
   timestamp: new Date(),
 }
 
-function ChatBox({ onMenuClick }) {
+function ChatBox({ onMenuClick, user, onLoginRequest }) {
   const [messages, setMessages]   = useState([WELCOME_MESSAGE])
   const [inputText, setInputText] = useState('')
   const [isTyping, setIsTyping]   = useState(false)
   const messagesEndRef = useRef(null)
   const inputRef       = useRef(null)
+
+  const isLoggedIn = !!user
 
   /* Auto-scroll vers le bas */
   useEffect(() => {
@@ -44,7 +46,7 @@ function ChatBox({ onMenuClick }) {
   /* Envoi du message */
   const sendMessage = () => {
     const text = inputText.trim()
-    if (!text || isTyping) return
+    if (!text || isTyping || !isLoggedIn) return
 
     const userMsg = {
       id: Date.now(),
@@ -111,7 +113,7 @@ function ChatBox({ onMenuClick }) {
           <div>
             <h2 className="chatbox-title">RoboChat</h2>
             <p className="chatbox-subtitle">
-              <span className="header-dot" /> Assistant de l'Association Robotique  ENSI
+              <span className="header-dot" /> Assistant de l'Association Robotique ENSI
             </p>
           </div>
         </div>
@@ -124,9 +126,23 @@ function ChatBox({ onMenuClick }) {
         </div>
       </header>
 
+      {/* ── Bannière "non connecté" ── */}
+      {!isLoggedIn && (
+        <div className="chatbox-locked-banner">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="3" y="7" width="10" height="7" rx="1.5" stroke="#D4A017" strokeWidth="1.3"/>
+            <path d="M5 7V5a3 3 0 016 0v2" stroke="#D4A017" strokeWidth="1.3"/>
+            <circle cx="8" cy="10.5" r="1" fill="#D4A017"/>
+          </svg>
+          <span>Connectez-vous pour envoyer des messages</span>
+          <button className="banner-login-btn" onClick={onLoginRequest}>
+            Se connecter
+          </button>
+        </div>
+      )}
+
       {/* ── Zone des messages ── */}
       <section className="chatbox-messages" aria-label="Messages">
-        {/* Décor de fond */}
         <div className="messages-bg-decor" />
 
         {messages.map(msg => (
@@ -144,18 +160,18 @@ function ChatBox({ onMenuClick }) {
           <textarea
             ref={inputRef}
             className="chatbox-input"
-            placeholder="Posez votre question à RoboChat…"
+            placeholder={isLoggedIn ? "Posez votre question à RoboChat…" : "Connectez-vous pour écrire…"}
             value={inputText}
             onChange={e => setInputText(e.target.value)}
             onKeyDown={handleKeyDown}
             rows={1}
-            disabled={isTyping}
+            disabled={isTyping || !isLoggedIn}
             aria-label="Saisir un message"
           />
           <button
-            className={`send-btn ${inputText.trim() ? 'send-btn--active' : ''}`}
+            className={`send-btn ${inputText.trim() && isLoggedIn ? 'send-btn--active' : ''}`}
             onClick={sendMessage}
-            disabled={!inputText.trim() || isTyping}
+            disabled={!inputText.trim() || isTyping || !isLoggedIn}
             aria-label="Envoyer"
           >
             <svg viewBox="0 0 24 24" fill="none">
